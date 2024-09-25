@@ -26,7 +26,23 @@
         var_dump($precio); //Depurar el valor de las variables, especialmente objetos y arrays
 
 
-        
+        $mayorEdad = 0; //Falso: 0, null, array vacío
+
+        if ($mayorEdad) {
+            echo "Soy mayor";
+        }
+
+        $pib = 3.5E7; //float
+        echo $pib;
+
+        echo "<br>";
+        echo 'Mc\'Donald';
+       
+        echo "<br><a href='http://www.marca.com'>Link</a>";
+        echo '<br><a href="http://www.google.es">Link</a><br>';
+
+
+
     ?>
 
     <a href="http://localhost:8080/otro.php">Otro php</a>

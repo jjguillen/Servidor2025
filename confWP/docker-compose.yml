@@ -1,0 +1,24 @@
+services:
+  phpweb: 
+    build: .
+    container_name: phpapache
+    ports:
+      - "8082:80"
+    volumes:
+      - ./wordpress:/var/www/html
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_wp
+    environment:
+        MARIADB_ROOT_PASSWORD: toor
+        MARIADB_DATABASE: wp_pruebaDespliegue
+        MARIADB_USER: usuario
+        MARIADB_PASSWORD: usuario
+    ports:
+      - "3308:3306"
+    volumes:
+      - db:/var/lib/mysql
+    
+volumes:
+  db:
