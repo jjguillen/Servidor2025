@@ -53,6 +53,5 @@
     $nombre = "Javier";
     echo "<br>".strtoupper($nombre);
 
-    echo "hola mundo";
 
 ?>
