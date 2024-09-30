@@ -9,7 +9,7 @@ $word_array_en=explode(",",$word_list_en);
 
 $texto="como que él era para ellos";
 
-$texto_array=explode(" ",$texto);
+$texto_array=explode(" ",$texto); 
 foreach($texto_array as $palabra) {
     $palabra = strtolower($palabra);
     $pos = array_search($palabra,$word_array_es);
