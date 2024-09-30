@@ -54,5 +54,6 @@
     echo "<br>".strtoupper($nombre);
 
     echo "Estoy desarrollando";
+    echo "He terminado"
 
 ?>
