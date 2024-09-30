@@ -54,11 +54,5 @@
     echo "<br>".strtoupper($nombre);
 
     echo "hola mundo";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> parent of 2c36655 (ssh)
 
->>>>>>> parent of 2c36655 (ssh)
 ?>
