@@ -17,7 +17,7 @@ services:
     container_name: php
     build: .
     volumes:
-      - php:/var/www/html
+      - ./php/:/var/www/html
           
   #MariaDB
   db:
