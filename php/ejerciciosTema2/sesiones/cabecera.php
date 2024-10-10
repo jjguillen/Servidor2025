@@ -15,12 +15,18 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="index.php" class="nav-link px-2 link-dark">Home</a></li>
         <li><a href="productos.php" class="nav-link px-2 link-dark">Productos</a></li>
-        <li><a href="servicios.php" class="nav-link px-2 link-dark">Servicios</a></li>
+        <li><a href="carro.php" class="nav-link px-2 link-dark">Carro</a></li>
         <li><a href="acerca.php" class="nav-link px-2 link-dark">Acerca</a></li>
       </ul>
 
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Login</button>
-        <a href="cerrarSesion.php" class="btn btn-primary active" role="button" aria-pressed="true">Cerrar</a>
+<?php
+    if (isset($_SESSION['usuario'])) {
+      echo "<span>".$_SESSION['usuario']['email']."</span>";
+    } else {
+      echo '<a href="formularioLogin.php" class="btn btn-primary active" role="button" aria-pressed="true">Login</a>';
+    }
+?>
+        <a href="controlador.php?accion=cerrarSesion" class="btn btn-primary active" role="button" aria-pressed="true">Cerrar</a>
       </div>
     </header>
