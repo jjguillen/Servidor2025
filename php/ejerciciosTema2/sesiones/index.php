@@ -10,16 +10,18 @@
         array("nombre" => "Gregorio", "email" => "gregor@gmail.com", "password" => "12345678")
     );
 
-    $_SESSION['productos'] = array(
-        array("id" => 1, "nombre" => "Reloj Garmin", "categoria" => "relojes", "precio" => 250, "img" => "img1.jpg"),
-        array("id" => 2,"nombre" => "Nintendo Switch Oled", "categoria" => "consolas", "precio" => 350, "img" => "img2.jpg"),
-        array("id" => 3,"nombre" => "Iphone 16", "categoria" => "moviles", "precio" => 950, "img" => "img3.jpg"),
-        array("id" => 4,"nombre" => "Teclado Logitech", "categoria" => "teclados", "precio" => 150, "img" => "img4.jpg"),
-        array("id" => 5,"nombre" => "Google Pixel 9", "categoria" => "moviles", "precio" => 850, "img" => "img5.jpg"),
-        array("id" => 6,"nombre" => "Reloj Amazfit", "categoria" => "relojes", "precio" => 250, "img" => "img6.jpg"),
-        array("id" => 7,"nombre" => "Iphone 15", "categoria" => "moviles", "precio" => 750, "img" => "img7.jpg"),
-        array("id" => 8,"nombre" => "Ratón Logitech", "categoria" => "ratones", "precio" => 50, "img" => "img8.jpg")
-    );
+    if (!isset($_SESSION['productos'])) {
+        $_SESSION['productos'] = array(
+            array("id" => 1, "nombre" => "Reloj Garmin", "categoria" => "relojes", "precio" => 250, "img" => "img1.jpg"),
+            array("id" => 2,"nombre" => "Nintendo Switch Oled", "categoria" => "consolas", "precio" => 350, "img" => "img2.jpg"),
+            array("id" => 3,"nombre" => "Iphone 16", "categoria" => "moviles", "precio" => 950, "img" => "img3.jpg"),
+            array("id" => 4,"nombre" => "Teclado Logitech", "categoria" => "teclados", "precio" => 150, "img" => "img4.jpg"),
+            array("id" => 5,"nombre" => "Google Pixel 9", "categoria" => "moviles", "precio" => 850, "img" => "img5.jpg"),
+            array("id" => 6,"nombre" => "Reloj Amazfit", "categoria" => "relojes", "precio" => 250, "img" => "img6.jpg"),
+            array("id" => 7,"nombre" => "Iphone 15", "categoria" => "moviles", "precio" => 750, "img" => "img7.jpg"),
+            array("id" => 8,"nombre" => "Ratón Logitech", "categoria" => "ratones", "precio" => 50, "img" => "img8.jpg")
+        );
+    }
 
     
 ?>

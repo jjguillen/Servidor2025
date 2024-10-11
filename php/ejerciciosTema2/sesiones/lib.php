@@ -24,6 +24,7 @@ function addCarro($idProducto) {
 
     //Buscar el id en los productos de la sesión 
     foreach($_SESSION['productos'] as $producto) {
+        //Buscar el id en los productos de la sesión
         if ($producto['id'] == $idProducto) {
             //Si el carrito está vacío lo creamos y añadimos el producto
             if (!isset($_SESSION['carro'])) {
@@ -32,8 +33,8 @@ function addCarro($idProducto) {
                 array_unshift($_SESSION['carro'], $producto);
             } else {
                 //Si el carrito ya existe, solo añadimos el producto
-                //Si el producto no está en el carro
 
+                //Si el producto no está en el carro
                 if (!in_array($producto['id'], array_column($_SESSION['carro'], 'id'))) {
                     $producto['cantidad'] = 1;
                     array_unshift($_SESSION['carro'], $producto);
@@ -45,9 +46,6 @@ function addCarro($idProducto) {
             }
         }
     }
-
-    //Redirigir a productos.php
-    header("Location: productos.php");
 
 }
 
