@@ -4,4 +4,8 @@ mariadb/ddl_recovery-backup.log
 mariadb/ib_buffer_pool
 mariadb/ib_logfile0
 mariadb/ibdata1
+mariadb/ddl_recovery.log
+mariadb/ibtmp1
+mariadb/tc.log
+
 
