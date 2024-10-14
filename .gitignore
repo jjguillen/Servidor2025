@@ -1,0 +1,7 @@
+mariadb/aria_log_control
+mariadb/aria_log.00000001
+mariadb/ddl_recovery-backup.log
+mariadb/ib_buffer_pool
+mariadb/ib_logfile0
+mariadb/ibdata1
+
