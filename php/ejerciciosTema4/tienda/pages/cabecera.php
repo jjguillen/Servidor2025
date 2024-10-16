@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once "modelo.php";
+?>
+
 <!--
 =========================================================
 * Soft UI Dashboard - v1.0.7
