@@ -88,6 +88,41 @@
 
             header("Location: index.php");
         }
+
+         //Formulario de modificar producto --------------------------------------------
+         if (isset($_POST['modificarProducto'])) {
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $categoria = $_POST['categoria'];
+            $descripcion = $_POST['descripcion'];
+            $id = $_POST['id'];
+
+            //Imagen - comprobar si no eliges ningún fichero, dejas lo que había
+            if (strcmp($_FILES['imagen']['name'], "") != 0) {
+                //Subir imagen 
+                $directorioSubida = "../web/img/";
+                $extensionesValidas = array("jpg", "png", "gif"); 
+                $nombreArchivo = $_FILES['imagen']['name'];
+                $directorioTemp = $_FILES['imagen']['tmp_name'];
+                $tipoArchivo = $_FILES['imagen']['type'];
+                $arrayArchivo = pathinfo($nombreArchivo);
+                $extension = $arrayArchivo['extension'];
+                // Comprobamos la extensión del archivo
+                if(!in_array($extension, $extensionesValidas)){
+                    header("Location: index.php?error=ImagenIncorrecta");
+                }
+                $nombre = "img".$id;
+                $nombreCompleto = $directorioSubida.$nombre.".".$extension;
+                move_uploaded_file($directorioTemp, $nombreCompleto);
+                modificarProductoImagen($nombre, $precio, $categoria, $descripcion, $extension, $id);
+            } else {
+                //Modificamos el producto, pero la imagen no se toca
+                modificarProducto($nombre, $precio, $categoria, $descripcion, $id);
+            }
+            modificarProducto($nombre, $precio, $categoria, $descripcion, $id);
+            header("Location: index.php");
+         }
+
     }
 
     if ($_GET) {
@@ -106,13 +141,12 @@
                 header("Location: index.php");
             }
 
-            //Modificar producto
+            //Modificar producto pintar el form
             if (strcmp($_GET['accion'],'modifProducto') == 0) {
                 $id = $_GET['id'];
                 header("Location: modificarProducto.php?id=".$id);
             }
 
-
-
+            
         }
     }

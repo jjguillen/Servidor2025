@@ -11,15 +11,59 @@
         <div class="col-12">
           <div class="card mb-4">
             <div class="card-header pb-0">
-              <h6>Productos</h6>
+              <h6>Modificar Producto</h6>
               
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
-             
-              <form>
-                <h2>Formulario</h2>
-                <input type="text" value="<?= $producto['nombre'];?>">
+            <div class="card-body px-0 pt-0 pb-2 col-10">
+              
+              <form method="post" action="controlador.php" id="modificarProducto" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Nombre</label>
+                  <input type="text" class="form-control" name="nombre" value="<?= $producto['nombre'];?>" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Precio</label>
+                  <input type="number" class="form-control" name="precio" value="<?= $producto['precio'];?>" min="1" required>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Categoria</label>
+                  <select class="form-control" name="categoria" required>
+
+<?php
+        if (strcmp($producto['categoria'],"electronica")) {
+          echo '<option value="electronica" selected>Eléctronica</option>';
+        } else {
+          echo '<option value="electronica">Eléctronica</option>';
+        }
+        if (strcmp($producto['categoria'],"hogar")) {
+          echo '<option value="hogar" selected>Hogar</option>';
+        } else {
+          echo '<option value="hogar">Hogar</option>';
+        }
+        if (strcmp($producto['categoria'],"gaming")) {
+          echo '<option value="gaming" selected>Gaming</option>';
+        } else {
+          echo '<option value="gaming">Gaming</option>';
+        }
+?>
+
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Imagen</label>
+                  <input type="file" class="form-control" name="imagen">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Descripción</label>
+                  <textarea class="form-control" name="descripcion"><?= $producto['descripcion'];?></textarea>
+                </div>
+                <input type="hidden" name="id" value="<?= $producto['id'];?>">
               </form>
+
+              <div class="modal-footer">
+                <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" form="modificarProducto" name="modificarProducto" class="btn bg-gradient-primary">Modificar</button>
+              </div>
 
             </div>
           </div>

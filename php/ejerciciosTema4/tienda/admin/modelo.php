@@ -148,7 +148,9 @@ function insertarProducto($nombre, $precio, $categoria, $descripcion, $extension
     return $id; //Para luego subir la imagen a la carpeta img con el nombre (con id) correspondiente
 }
 
-
+/**
+ * Devuelve un producto consultado por id
+ */
 function consultarProducto($id) {
     $dbh = conectarBD();
     
@@ -161,6 +163,39 @@ function consultarProducto($id) {
     $dbh = null;
 
     return $producto;
+}
+
+
+function modificarProducto($nombre, $precio, $categoria, $descripcion, $id) {
+    $dbh = conectarBD();
+    
+    $stmt = $dbh->prepare("UPDATE productos SET nombre=?, precio=?, categoria=?, descripcion=?
+    WHERE id=?");
+    $stmt->bindParam(1, $nombre);
+    $stmt->bindParam(2, $precio);
+    $stmt->bindParam(3, $categoria);
+    $stmt->bindParam(4, $descripcion);
+    $stmt->bindParam(5, $id);
+    $stmt->execute(); //La ejecución de la consulta
+    
+    $dbh = null;
+}
+
+function modificarProductoImagen($nombre, $precio, $categoria, $descripcion, $extension, $id) {
+    $dbh = conectarBD();
+    
+    $stmt = $dbh->prepare("UPDATE productos SET nombre=?, precio=?, categoria=?, descripcion=?, imagen=? 
+    WHERE id=?");
+    $stmt->bindParam(1, $nombre);
+    $stmt->bindParam(2, $precio);
+    $stmt->bindParam(3, $categoria);
+    $stmt->bindParam(4, $descripcion);
+    $imagen = "img".$id.".".$extension;
+    $stmt->bindParam(5, $imagen);
+    $stmt->bindParam(6, $id);
+    $stmt->execute(); //La ejecución de la consulta
+    
+    $dbh = null;
 }
 
 
