@@ -75,7 +75,9 @@ function registrarUsuario($email, $password, $nombre, $apellidos, $movil, $ciuda
 
     $rol = "user"; 
 
+    //En lugar de guardar password en claro, guardamos un hash del password
     $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+
     $stmt->bindParam(1, $email);
     $stmt->bindParam(2, $passwordHash);
     $stmt->bindParam(3, $nombre);
@@ -89,7 +91,77 @@ function registrarUsuario($email, $password, $nombre, $apellidos, $movil, $ciuda
     $dbh = null;
 }
 
+/**
+ * Devuelve en un array asociativo todos los productos que haya
+ */
+function consultarProductos() {
+    $dbh = conectarBD();
+    
+    $stmt = $dbh->prepare("SELECT * FROM productos");
+    $stmt->execute(); //La ejecución de la consulta
+    $productos = $stmt->fetchAll(PDO::FETCH_ASSOC); //array
 
+    $dbh = null;
+
+    return $productos;
+}
+
+/**
+ * Borra un producto dado por su id
+ */
+function borrarProducto($id) {
+    $dbh = conectarBD();
+    
+    $stmt = $dbh->prepare("DELETE FROM productos WHERE id = ?");
+    $stmt->bindParam(1, $id);
+    $stmt->execute(); //La ejecución del delete
+
+    $dbh = null;
+}
+
+
+/**
+ * Insertar producto, la imagen la generamos como img<id>.jpg
+ */
+function insertarProducto($nombre, $precio, $categoria, $descripcion, $extension) {
+    $dbh = conectarBD();
+    $imagen = " ";
+
+    $stmt = $dbh->prepare("INSERT INTO productos (nombre, precio, imagen, categoria, descripcion)
+        VALUES (?, ?, ?, ?, ?)");
+    $stmt->bindParam(1, $nombre);
+    $stmt->bindParam(2, $precio);
+    $stmt->bindParam(3, $imagen);  //img<id>.jpg
+    $stmt->bindParam(4, $categoria);
+    $stmt->bindParam(5, $descripcion);
+    $stmt->execute(); //La ejecución del insert
+
+    $id = $dbh->lastInsertId();
+    $imagen = "img".$id.".".$extension;
+    $stmt = $dbh->prepare("UPDATE productos SET imagen=? WHERE id=?");
+    $stmt->bindParam(1, $imagen);
+    $stmt->bindParam(2, $id);
+    $stmt->execute();
+
+    $dbh = null;
+
+    return $id; //Para luego subir la imagen a la carpeta img con el nombre (con id) correspondiente
+}
+
+
+function consultarProducto($id) {
+    $dbh = conectarBD();
+    
+    $stmt = $dbh->prepare("SELECT * FROM productos WHERE id=?");
+    $stmt->bindParam(1, $id);
+    $stmt->execute(); //La ejecución de la consulta
+
+    $producto = $stmt->fetch();
+    
+    $dbh = null;
+
+    return $producto;
+}
 
 
 ?>

@@ -56,6 +56,38 @@
                 header("Location: login.php?error=errorLogin");
             }
         }
+
+        //Formulario de insertar producto --------------------------------------------
+        if (isset($_POST['nuevoProducto'])) {
+            $nombre = $_POST['nombre'];
+            $precio = $_POST['precio'];
+            $categoria = $_POST['categoria'];
+            $descripcion = $_POST['descripcion'];
+            
+            //Subir imagen 
+            $directorioSubida = "../web/img/";
+            $extensionesValidas = array("jpg", "png", "gif"); 
+            $nombreArchivo = $_FILES['imagen']['name'];
+            $directorioTemp = $_FILES['imagen']['tmp_name'];
+            $tipoArchivo = $_FILES['imagen']['type'];
+            $arrayArchivo = pathinfo($nombreArchivo);
+            $extension = $arrayArchivo['extension'];
+            // Comprobamos la extensión del archivo
+            if(!in_array($extension, $extensionesValidas)){
+                header("Location: index.php?error=ImagenIncorrecta");
+            }
+
+            //Insertar producto en BBDD
+            $id = insertarProducto($nombre, $precio, $categoria, $descripcion, $extension);
+
+            //Una vez insertado el producto ya puedo generar el nombre de la
+            //imagen y moverla a la carpeta adecuada
+            $nombre = "img".$id;
+            $nombreCompleto = $directorioSubida.$nombre.".".$extension;
+            move_uploaded_file($directorioTemp, $nombreCompleto);
+
+            header("Location: index.php");
+        }
     }
 
     if ($_GET) {
@@ -67,6 +99,18 @@
                 header("Location: index.php");
             }
 
+            //Borrar producto
+            if (strcmp($_GET['accion'],'borrarProducto') == 0) {
+                $id = $_GET['id'];
+                borrarProducto($id);
+                header("Location: index.php");
+            }
+
+            //Modificar producto
+            if (strcmp($_GET['accion'],'modifProducto') == 0) {
+                $id = $_GET['id'];
+                header("Location: modificarProducto.php?id=".$id);
+            }
 
 
 
