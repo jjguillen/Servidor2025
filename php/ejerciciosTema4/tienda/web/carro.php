@@ -19,31 +19,34 @@
 <?php
     $total = 0;
     $contador = 0;
-    foreach($_SESSION['carro'] as $producto) {
-        echo "<tr>";
-        echo "<td>{$producto['nombre']}</td>";
-        echo "<td>{$producto['precio']}</td>";
-        echo "<td>
-            <a href='controlador.php?accion=decremento&posicion={$contador}' class='btn'>-</a>
-            {$producto['cantidad']}
-             <a href='controlador.php?accion=incremento&posicion={$contador}' class='btn'>+</a>
+    if (isset($_SESSION["carro"]) && (count($_SESSION['carro']) > 0)) {
+        foreach($_SESSION['carro'] as $producto) {
+            echo "<tr>";
+            echo "<td>{$producto['nombre']}</td>";
+            echo "<td>{$producto['precio']}</td>";
+            echo "<td>
+                <a href='controlador.php?accion=decremento&posicion={$contador}' class='btn'>-</a>
+                {$producto['cantidad']}
+                <a href='controlador.php?accion=incremento&posicion={$contador}' class='btn'>+</a>
+                </td>";
+            echo "<td>". ($producto['precio'] * $producto['cantidad']) ." €</td>";
+            echo "<td>
+            <a href='controlador.php?accion=eliminarCarro&posicion={$contador}' class='btn btn-danger'>X</a>
             </td>";
-        echo "<td>". ($producto['precio'] * $producto['cantidad']) ." €</td>";
-        echo "<td>
-         <a href='controlador.php?accion=eliminarCarro&posicion={$contador}' class='btn btn-danger'>X</a>
-        </td>";
-        echo "</tr>";
-        $total += ($producto['precio'] * $producto['cantidad']);
-        $contador++;
+            echo "</tr>";
+            $total += ($producto['precio'] * $producto['cantidad']);
+            $contador++;
+        }
+        echo "<tr><td colspan='3'>Total</td><td colspan='2'>{$total} €</td></tr>";
+        echo "</table>";
+        echo "<a href='controlador.php?accion=realizarPedido' class='btn btn-success'>Comprar</a>";
+    } else {
+        echo "</table>";
+        echo "<a href='controlador.php?accion=realizarPedido' class='btn btn-success disabled'>Comprar</a>";
     }
-    echo "<tr><td colspan='3'>Total</td><td colspan='2'>{$total} €</td></tr>";
-
-    //var_dump($_SESSION['carro']);
-
-
 ?>
 
-            </table>
+            
         </div>
     </main>
 

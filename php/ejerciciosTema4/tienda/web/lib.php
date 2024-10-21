@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once "../admin/modelo.php";
 
 /**
  * Función para buscar un email en los usuarios de la sesión y comprobar el password
@@ -22,8 +23,9 @@ function buscar($email, $password) {
  */
 function addCarro($idProducto) {
 
+    $productos = consultarProductos();
     //Buscar el id en los productos de la sesión 
-    foreach($_SESSION['productos'] as $producto) {
+    foreach($productos as $producto) {
         //Buscar el id en los productos de la sesión
         if ($producto['id'] == $idProducto) {
             //Si el carrito está vacío lo creamos y añadimos el producto

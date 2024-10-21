@@ -21,10 +21,10 @@
                 header("Location: registro.php?error=yaRegistrado");
             } else {
                 //Registrar el usuario en BBDD
-                registrarUsuario($email, $password, $nombre, $apellidos, $movil, $ciudad, $fechaN);
+                $id = registrarUsuario($email, $password, $nombre, $apellidos, $movil, $ciudad, $fechaN);
 
                 //Si ha funcionado bien lo metemos en la sesión
-                $_SESSION['usuario'] = array("email" => $email, "rol" => "user");
+                $_SESSION['usuario'] = array("email" => $email, "rol" => "user", "id" => $id);
                 header("Location: ../web/index.php"); //Usuario nuevo registrado
             } 
         }
@@ -42,10 +42,10 @@
                 if (password_verify($password, $passwordHash)) {
                     //Verificar rol
                     if (strcmp($datos['rol'],"admin") == 0) {
-                        $_SESSION['usuario'] = array("email" => $email, "rol" => "admin");
+                        $_SESSION['usuario'] = array("email" => $email, "rol" => "admin", "id" => $datos['id']);
                         header("Location: index.php"); //Usuario admin logueado
                     } else {
-                        $_SESSION['usuario'] = array("email" => $email, "rol" => "user");
+                        $_SESSION['usuario'] = array("email" => $email, "rol" => "user", "id" => $datos['id']);
                         header("Location: ../web/index.php"); //Usuario web logueado
                     }
                 } else {

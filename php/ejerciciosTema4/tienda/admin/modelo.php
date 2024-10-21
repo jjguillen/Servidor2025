@@ -9,8 +9,10 @@ function conectarBD() {
     //Metemos en la sesión la conexión a BBDD
     try {
         //host->nombre del contenedor mariadb y el puerto interno entre contenedores de mariadb
-        $dsn = "mysql:host=mariadb:3306;dbname=ejemplo";
+        $dsn = "mysql:host=mariadb:3306;dbname=ejemplo;charset=utf8mb4";
         $dbh = new PDO($dsn, "usuario", "usuario");
+        //$dsn = "mysql:host=database-1.cqfkabeyeaab.us-east-1.rds.amazonaws.com:3306;dbname=tienda;charset=utf8mb4";
+        //$dbh = new PDO($dsn, "admin", "BKH32Tx6iUM9O4noQn5y");
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e){
         echo "ERROR CONEXION " . $e->getMessage();
@@ -46,7 +48,7 @@ function consultarUsuarioPorEmail($email) {
 function consultarRolHash($email) {
     $dbh = conectarBD();
     
-    $stmt = $dbh->prepare("SELECT rol,password FROM usuarios WHERE email=:email");
+    $stmt = $dbh->prepare("SELECT rol,password,id FROM usuarios WHERE email=:email");
     $stmt->bindParam(":email", $email);
     $stmt->setFetchMode(PDO::FETCH_ASSOC); //Nos devuelve los resultados como array asociativo
     $stmt->execute(); //La ejecución de la consulta
@@ -88,7 +90,11 @@ function registrarUsuario($email, $password, $nombre, $apellidos, $movil, $ciuda
     $stmt->bindParam(8, $rol);
     $stmt->execute(); //La ejecución de la consulta
     
+    $id = $dbh->lastInsertId();
+
     $dbh = null;
+
+    return $id;
 }
 
 /**
@@ -198,5 +204,13 @@ function modificarProductoImagen($nombre, $precio, $categoria, $descripcion, $ex
     $dbh = null;
 }
 
+
+function realizarPedido($carro, $idUsuario) {
+    var_dump($carro);
+    echo "<br>$idUsuario";
+
+    //Falta insertar pedido y sus lineas de pedido con una transacción del
+    
+}
 
 ?>

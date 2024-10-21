@@ -71,6 +71,14 @@
                 }
                 header("Location: carro.php");
             } 
+
+             //Realizar pedido con los productos del carro de la compra
+             if (strcmp($_GET['accion'], "realizarPedido") == 0) {
+                $carro = $_SESSION['carro'];
+                $idUsuario = $_SESSION['usuario']['id'];
+                realizarPedido($carro, $idUsuario);
+                header("Location: index.php");
+            } 
         }
 
     }
