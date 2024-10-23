@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 include_once "modelo.php";
 
@@ -81,6 +82,14 @@ if (isset($_SESSION['usuario'])) {
           </a>
         </li>
         
+        <li class="nav-item">
+          <a class="nav-link  active" href="pedidos.php">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="fa fa-list text-xs"></i>
+            </div>
+            <span class="nav-link-text ms-1">Pedidos</span>
+          </a>
+        </li>
         
       </ul>
     </div>

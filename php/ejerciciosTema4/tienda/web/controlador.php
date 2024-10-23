@@ -76,8 +76,14 @@
              if (strcmp($_GET['accion'], "realizarPedido") == 0) {
                 $carro = $_SESSION['carro'];
                 $idUsuario = $_SESSION['usuario']['id'];
-                realizarPedido($carro, $idUsuario);
-                header("Location: index.php");
+                $error = realizarPedido($carro, $idUsuario);
+                if ($error)
+                    header("Location: index.php?error=errorTransaccion");
+                else {
+                    unset($_SESSION['carro']);
+                    header("Location: index.php");
+                }
+                    
             } 
         }
 
