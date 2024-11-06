@@ -1,5 +1,8 @@
 mariadb
 mariadb/*
+ib_logfile0
+aria_log_00000001
+aria_log_control
 
 
 
