@@ -92,7 +92,20 @@
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center me-2">
                 <i class="fa fa-user me-sm-1"></i>
-                <span class="d-sm-inline d-none">Pintar email usuario</span>
+                <span class="d-sm-inline d-none">
+                    <?php
+                        if (isset($_SESSION['usuario'])) {
+                            $email = $_SESSION['usuario'];
+                            echo $email;
+                        } else {
+                            echo "
+                            <a href='./index.php?accion=login' class='nav-link text-body font-weight-bold px-0'>
+                                <span class='d-sm-inline d-none'>Login</span>
+                            </a>
+                            ";
+                        }
+                    ?>
+                </span>
             </li>
             <li class="nav-item d-flex align-items-center">
               <a href="./index.php?accion=cerrar" class="nav-link text-body font-weight-bold px-0">

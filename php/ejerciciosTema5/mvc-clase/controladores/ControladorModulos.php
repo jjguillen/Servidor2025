@@ -2,6 +2,7 @@
 
     namespace Modulos\controladores;
 
+    use Modulos\vistas\VistaLogin;
     use Modulos\vistas\VistaModulos;
     use Modulos\modelos\ModeloModulos;
     use Modulos\vistas\VistaModulosFormUpdate;
@@ -56,6 +57,7 @@
             //Volver a pintar todos los móoulos
             header("Location: index.php?accion=mostrarModulos");
         }
+
 
 
     }

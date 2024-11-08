@@ -82,7 +82,7 @@ class VistaModulosFormUpdate  {
                         </form>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="reset" form="modificarModulo" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Limpiar</button>
                             <button type="submit" form="modificarModulo" name="modificarModulo" class="btn bg-gradient-primary">Modificar</button>
                         </div>
 

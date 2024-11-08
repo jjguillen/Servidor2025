@@ -3,8 +3,11 @@
     namespace Modulos\controladores;
 
     use Modulos\vistas\VistaAlumnos;
+    use Modulos\vistas\VistaMatriculas;
     use Modulos\modelos\ModeloAlumnos;
     use Modulos\vistas\VistaAlumnosFormUpdate;
+    use Modulos\vistas\VistaModulos;
+    use Modulos\vistas\VistaModulosMatricular;
 
     class ControladorAlumnos
     {
@@ -48,6 +51,31 @@
             ModeloAlumnos::updateAlumno($alumno);
             header("Location: index.php?accion=mostrarAlumnos");
         }
+
+        public static function verMatriculas($id) {
+            $alumno = ModeloAlumnos::getById($id);
+            $modulosMatric = ModeloAlumnos::getMatriculas($id);
+            VistaMatriculas::render($modulosMatric, $alumno);
+        }
+
+        public static function verModulosNoMatriculado($id) {
+            $alumno = ModeloAlumnos::getById($id);
+            $modulosNoMatric = ModeloAlumnos::getModulosNoMatriculados($id);
+            VistaModulosMatricular::render($modulosNoMatric, $alumno);
+        }
+
+        public static function matricular($modulosIds, $idAlumno) {
+            foreach($modulosIds as $moduloId) {
+                ModeloAlumnos::matricular($moduloId, $idAlumno);
+            }
+            header("Location: index.php?accion=verMatriculas&id=".$idAlumno);
+        }
+
+        public static function borrarMatricula($idAlumno, $idModulo) {
+            ModeloAlumnos::deleteMatricula($idAlumno, $idModulo);
+            header("Location: index.php?accion=verMatriculas&id=".$idAlumno);
+        }
+
 
 
     }

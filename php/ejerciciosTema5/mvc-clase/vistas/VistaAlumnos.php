@@ -70,7 +70,8 @@ class VistaAlumnos  {
                             <div class="d-flex align-items-center justify-content-center">
                               <span class="me-2 text-xs font-weight-bold">
                                 <a href="index.php?accion=borrarAlumno&id=<?= $alumno->getId(); ?>"><i class="fas fa-trash me-3"></i></a>
-                                <a href="index.php?accion=modifAlumno&id=<?= $alumno->getId(); ?>"><i class="fas fa-pen"></i></a>
+                                <a href="index.php?accion=modifAlumno&id=<?= $alumno->getId(); ?>"><i class="fas fa-pen me-3"></i></a>
+                                <a href="index.php?accion=verMatriculas&id=<?= $alumno->getId(); ?>"><i class="fas fa-eye"></i></a>
                               </span>
                             </div>
                           </td>

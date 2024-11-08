@@ -2,9 +2,9 @@
 
 namespace Modulos\vistas;
 
-class VistaModulos  {
+class VistaMatriculas  {
 
-    public static function render($modulos) {
+    public static function render($modulos, $alumno) {
 
         include("cabecera.php");
 ?>
@@ -14,10 +14,10 @@ class VistaModulos  {
             <div class="col-12">
               <div class="card mb-4">
                 <div class="card-header pb-0">
-                  <h6>Módulos</h6>
-                  <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalNuevoModulo">
-                    Nuevo
-                  </button>
+                  <h6>Módulos en los que está matriculado <?= $alumno->getNombre();?> </h6>
+                  <a href="index.php?accion=matricular&idAlumno=<?= $alumno->getId();?>" type="button" class="btn btn-outline-primary btn-sm">
+                    Matricular
+                  </a>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
                   <div class="table-responsive p-0">
@@ -58,10 +58,7 @@ class VistaModulos  {
                             </td>
                           <td class="align-middle text-center">
                             <div class="d-flex align-items-center justify-content-center">
-                              <span class="me-2 text-xs font-weight-bold">
-                                <a href="index.php?accion=borrarModulo&id=<?= $modulo->getId(); ?>"><i class="fas fa-trash me-3"></i></a>
-                                <a href="index.php?accion=modifModulo&id=<?= $modulo->getId(); ?>"><i class="fas fa-pen"></i></a>
-                              </span>
+                                <a href="index.php?accion=borrarMatricula&idModulo=<?= $modulo->getId(); ?>&idAlumno=<?= $alumno->getId();?>"><i class="fas fa-trash me-3"></i></a
                             </div>
                           </td>
 

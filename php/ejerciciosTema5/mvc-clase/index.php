@@ -3,9 +3,12 @@
     namespace Modulos;
 
     session_start();
+    //session_destroy();
 
+    use DeepRacer\modelos\ModeloUsuarios;
     use Modulos\controladores\ControladorModulos;
     use Modulos\controladores\ControladorAlumnos;
+    use Modulos\controladores\ControladorUsuarios;
     use Modulos\modelos\Modulo;
     use Modulos\modelos\Alumno;
 
@@ -61,6 +64,36 @@
             ControladorAlumnos::mostrarFormUpdateAlumno($id);
         }
 
+        //Login
+        if (strcmp($_REQUEST["accion"], "login") == 0) {
+            ControladorUsuarios::mostrarLogin("");
+        }
+
+        //Cerrar
+        if (strcmp($_REQUEST["accion"], "cerrar") == 0) {
+            unset($_SESSION['usuario']);
+            ControladorUsuarios::mostrarLogin("");
+        }
+
+        //verMatriculas
+        if (strcmp($_REQUEST["accion"], "verMatriculas") == 0) {
+            $id = $_REQUEST['id'];
+            ControladorAlumnos::verMatriculas($id);
+        }
+
+        //Matricular alumno en módulos
+        if (strcmp($_REQUEST["accion"], "matricular") == 0) {
+            $idAlumno = $_REQUEST['idAlumno'];
+            ControladorAlumnos::verModulosNoMatriculado($idAlumno);
+        }
+
+        //Matricular alumno en módulos
+        if (strcmp($_REQUEST["accion"], "borrarMatricula") == 0) {
+            $idAlumno = $_REQUEST['idAlumno'];
+            $idModulo = $_REQUEST['idModulo'];
+            ControladorAlumnos::borrarMatricula($idAlumno, $idModulo);
+        }
+
 
     //Tratamiento de forms
     } else if ($_POST != null) {
@@ -88,6 +121,15 @@
                 $_POST['email'],$_POST['edad'],$_POST['localidad'],$_POST['telefono']);
             ControladorAlumnos::modificarAlumno($alumno);
         }
+        if (isset($_POST['login'])) {
+            ControladorUsuarios::login($_POST['email'], $_POST['password']);
+        }
+        if (isset($_POST['matricular'])) {
+            //Recoger ids de módulos en los que no está matriculado
+            $modulosIds = $_POST['matriculas'];
+            $idAlumno = $_POST['idAlumno'];
+            ControladorAlumnos::matricular($modulosIds, $idAlumno);
+        }
 
 
     } else {
@@ -97,8 +139,7 @@
             ControladorModulos::mostrarModulos();
         } else {
             //Formulario de login
-            //ControladorModulos::mostrarLoginView();
-            ControladorModulos::mostrarModulos();
+            ControladorUsuarios::mostrarLogin("");
         }
 
     }

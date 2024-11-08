@@ -3,6 +3,7 @@
     namespace Modulos\modelos;
 
     use Modulos\modelos\Alumno;
+    use Modulos\modelos\Modulo;
     use \PDO;
 
     class ModeloAlumnos {
@@ -85,6 +86,75 @@
             $stmt->bindValue(5, $alumno->getLocalidad());
             $stmt->bindValue(6, $alumno->getTelefono());
             $stmt->bindValue(7, $alumno->getId());
+            $stmt->execute();
+
+            $conexion->cerrarConexion();
+        }
+
+        public static function getMatriculas($idAlumno) {
+
+            $conexion = new ConexionBD();
+
+            //Hacer consulta BBDD para obtener todos los módulos
+            $stmt = $conexion->getConexion()->prepare("SELECT mo.* FROM matriculas as ma  
+                        JOIN modulos as mo
+                        WHERE mo.id = ma.modulo_id AND alumno_id = ?");
+            $stmt->bindValue(1, $idAlumno);
+            $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Modulos\modelos\Modulo');
+            $stmt->execute(); //La ejecución de la consulta
+            $modulos = $stmt->fetchAll();
+
+            $conexion->cerrarConexion();
+
+            return $modulos;
+        }
+
+        public static function getModulosNoMatriculados($idAlumno) {
+
+            $conexion = new ConexionBD();
+
+            //Hacer consulta BBDD para obtener todos los módulos
+            $stmt = $conexion->getConexion()->prepare("SELECT mo.* FROM modulos as mo
+                        WHERE mo.id NOT IN (
+                                SELECT mo.id FROM matriculas as ma  
+                                JOIN modulos as mo
+                                WHERE mo.id = ma.modulo_id AND ma.alumno_id = ?
+                            )
+                        ");
+            $stmt->bindValue(1, $idAlumno);
+            $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Modulos\modelos\Modulo');
+            $stmt->execute(); //La ejecución de la consulta
+            $modulos = $stmt->fetchAll();
+
+            $conexion->cerrarConexion();
+
+            return $modulos;
+        }
+
+        public static function matricular($moduloId, $alumnoId) {
+            $conexion = new ConexionBD();
+
+            //Hacer consulta BBDD para obtener todos los módulos
+            $stmt = $conexion->getConexion()->prepare("INSERT INTO matriculas  
+                (alumno_id, modulo_id, convocatoria) VALUES (?,?)");
+            $convocatoria = 1;
+            $stmt->bindValue(1, $alumnoId);
+            $stmt->bindValue(2, $moduloId);
+            $stmt->bindValue(3, $convocatoria);
+
+            $stmt->execute();
+
+            $conexion->cerrarConexion();
+        }
+
+        public static function deleteMatricula($idAlumno, $idModulo) {
+            $conexion = new ConexionBD();
+
+            //Hacer consulta BBDD para obtener todos los módulos
+            $stmt = $conexion->getConexion()->prepare("DELETE FROM matriculas
+                        WHERE alumno_id = ? AND modulo_id = ?");
+            $stmt->bindValue(1, $idAlumno);
+            $stmt->bindValue(2, $idModulo);
             $stmt->execute();
 
             $conexion->cerrarConexion();
