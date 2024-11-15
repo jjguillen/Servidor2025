@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APIs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
 </head>
 <body>
@@ -18,9 +17,10 @@
 <?php
 
 //$uri = "https://www.googleapis.com/books/v1/volumes?q=".urlencode($_GET['titulo']); 
-$uri = "https://api.openweathermap.org/data/3.0/onecall?lat=37.296944&lon=-1.879722&appid={api_key}";       
+//$uri = "https://api.openweathermap.org/data/3.0/onecall?lat=37.296944&lon=-1.879722&appid=f222971d012d14db362d4b5ca00c754f";
+$uri = "https://api.openweathermap.org/data/2.5/weather?lat=37.29223804597023&lon=-1.8773787801395931&units=metric&appid=f222971d012d14db362d4b5ca00c754f";
 $reqPrefs['http']['method'] = 'GET';
-$reqPrefs['http']['header'] = 'X-Auth-Token: ';
+//$reqPrefs['http']['header'] = 'X-Auth-Token: ';
 $stream_context = stream_context_create($reqPrefs);
 $resultado = file_get_contents($uri, false, $stream_context);
 
@@ -28,9 +28,9 @@ $resultado = file_get_contents($uri, false, $stream_context);
 if ($resultado != false) {
     $respPHP = json_decode($resultado);
 
-    echo $respPHP->current->temp . "<br>";
-
-       
+    echo $respPHP->main->temp . "<br>";
+    echo $respPHP->name . "<br>";
+    echo "<img width='100px' src='https://openweathermap.org/img/wn/".$respPHP->weather[0]->icon."@2x.png'>";
 
 
 }

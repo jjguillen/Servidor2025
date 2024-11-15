@@ -20,7 +20,7 @@
 $key = "api_key=a74c122b22807a76b7637ac1407a045e";
 
 //$uri = "https://api.themoviedb.org/3/genre/tv/list?language=es&".$key;       
-$uri = "https://api.themoviedb.org/3/discover/tv?language=es&with_generes=Comedia,Misterio&with_original_language=en&page=2&".$key;       
+$uri = "https://api.themoviedb.org/3/discover/tv?language=es&with_original_language=en&page=2&".$key;
 
 $resultado = file_get_contents($uri, false);
 

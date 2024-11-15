@@ -18,7 +18,7 @@
 <?php
 
 
-$uri = "http://ergast.com/api/f1/2023/20/driverStandings.json";       
+$uri = "http://ergast.com/api/f1/2024/20/driverStandings.json";
 $reqPrefs['http']['method'] = 'GET';
 $reqPrefs['http']['header'] = 'X-Auth-Token: ';
 $stream_context = stream_context_create($reqPrefs);

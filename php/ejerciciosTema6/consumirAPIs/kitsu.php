@@ -38,7 +38,7 @@ if ($resultado != false) {
             <img src='{$weapon->attributes->posterImage->small}' class='card-img-top' alt='...'>
             <div class='card-body'>
                 <h5 class='card-title'>{$weapon->attributes->titles->en_jp}</h5>
-                <p class='card-text'><a href='kitsu-detalle.php?url=https://kitsu.io/api/edge/anime/46873/relationships/episodes'>Episodios</a></p>
+                <p class='card-text'><a href='kitsu-detalle.php?id={$weapon->id}'>Episodios</a></p>
             </div>
         </div>
         ";

@@ -17,7 +17,7 @@
     
 <?php
 
-$url = $_GET['url'];
+$url = "https://kitsu.io/api/edge/anime/".$_GET['id']."/relationships/episodes";
 
 $uri = $url;       
 $reqPrefs['http']['method'] = 'GET';
