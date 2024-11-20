@@ -34,5 +34,18 @@ services:
     volumes:
         - ./mariadb:/var/lib/mysql
 
+  #MongoDB
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: toor
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb:/data/db
+
 
 
