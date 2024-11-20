@@ -14,22 +14,28 @@
     </div>
 </body>
 
-<script type="module">
+<script>
+    window.onload = inicio;
 
-    const response = await fetch("https://kitsu.io/api/edge/trending/anime");
-    const json = await response.json();
+    async function inicio() {
 
-    let dataHtml = "<div class='row'>";
-    json.data.forEach(anime => {
-        dataHtml += "<div class='card' style='width: 20rem;'>";
-        dataHtml += "<img src='" + anime.attributes.posterImage.small + "' class='card-img-top' alt='...'>";
-        dataHtml += "<div class='card-body'>";
-        dataHtml += "<h5 class='card-title'>"+ anime.attributes.titles.en_jp +"</h5>";
-        dataHtml += "<p class='card-text'>Some quick exa</p>";
-        dataHtml += "</div></div>";
-    });
-    dataHtml += "</div>";
-    document.getElementById("principal").innerHTML = dataHtml;
+        const response = await fetch("https://kitsu.io/api/edge/trending/anime");
+        const json = await response.json();
+
+        let dataHtml = "<div class='row'>";
+        json.data.forEach(anime => {
+            dataHtml += "<div class='card' style='width: 20rem;'>";
+            dataHtml += "<img src='" + anime.attributes.posterImage.small + "' class='card-img-top' alt='...'>";
+            dataHtml += "<div class='card-body'>";
+            dataHtml += "<h5 class='card-title'>" + anime.attributes.titles.en_jp + "</h5>";
+            dataHtml += "<p class='card-text'>Some quick exa</p>";
+            dataHtml += "</div></div>";
+        });
+        dataHtml += "</div>";
+        document.getElementById("principal").innerHTML = dataHtml;
+    }
+
+    console.log("Final");
 
 
 </script>
