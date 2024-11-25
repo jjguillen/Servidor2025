@@ -3,6 +3,7 @@
 namespace Pelis;
 
 use Pelis\modelos\ConexionBD;
+use Pelis\controladores\ControladorSeries;
 
 session_start();
 //session_destroy();
@@ -20,4 +21,31 @@ spl_autoload_register(function ($class) {
 });
 
 
-ConexionBD::conectar();
+if (isset($_REQUEST["accion"])) {
+    if (strcmp($_REQUEST["accion"], "addfav") == 0) {
+        $id = $_REQUEST["id"];
+        $name = $_REQUEST["name"];
+        $image = $_REQUEST["image"];
+        ControladorSeries::addFav($id, $name, $image);
+    }
+    if (strcmp($_REQUEST["accion"], "misSeries") == 0) {
+        ControladorSeries::getMisSeries();
+    }
+} else {
+    //Página de inicio
+    ControladorSeries::mostrarSeriesAPI();
+
+    /*
+    if (isset($_SESSION['usuario'])) {
+        //Inicio de la app
+        ControladorModulos::mostrarModulos();
+    } else {
+        //Formulario de login
+        ControladorUsuarios::mostrarLogin("");
+    }
+    */
+
+}
+
+
+
