@@ -31,6 +31,14 @@ if (isset($_REQUEST["accion"])) {
     if (strcmp($_REQUEST["accion"], "misSeries") == 0) {
         ControladorSeries::getMisSeries();
     }
+    if (strcmp($_REQUEST["accion"], "deleteFav") == 0) {
+        $id = $_REQUEST["id"];
+        ControladorSeries::deleteFavorito($id);
+    }
+    if (strcmp($_REQUEST["accion"], "getComentarios") == 0) {
+        $id = $_REQUEST["id"];
+        ControladorSeries::getComentarios($id);
+    }
 } else {
     //Página de inicio
     ControladorSeries::mostrarSeriesAPI();

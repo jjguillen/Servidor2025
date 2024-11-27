@@ -18,7 +18,13 @@
             echo ModeloSeries::getMisSeries();
         }
 
+        public static function deleteFavorito($id) {
+            ModeloSeries::delete($id);
+        }
 
+        public static function getComentarios($id) {
+            echo ModeloSeries::getComentarios($id);
+        }
 
 
     }

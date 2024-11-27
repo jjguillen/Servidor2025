@@ -17,11 +17,18 @@
         public static function getMisSeries() {
             $conexion = ConexionBD::conectar();
             $series = $conexion->series->find();
-            $json = array();
-            foreach ($series as $serie) {
-                array_push($json, $serie);
-            }
-            return json_encode($json);
+            return json_encode($series->toArray());
+        }
+
+        public static function delete($id) {
+            $conexion = ConexionBD::conectar();
+            $conexion->series->deleteOne(['id' => $id]);
+        }
+
+        public static function getComentarios($id) {
+            $conexion = ConexionBD::conectar();
+            $comentarios = $conexion->comentarios->find(['id_serie' => intval($id)]);
+            return json_encode($comentarios->toArray());
         }
 
 
