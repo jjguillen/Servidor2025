@@ -20,7 +20,6 @@ spl_autoload_register(function ($class) {
     include_once "./" . $ruta . ".php";
 });
 
-
 if (isset($_REQUEST["accion"])) {
     if (strcmp($_REQUEST["accion"], "addfav") == 0) {
         $id = $_REQUEST["id"];
@@ -39,6 +38,12 @@ if (isset($_REQUEST["accion"])) {
         $id = $_REQUEST["id"];
         ControladorSeries::getComentarios($id);
     }
+    if (strcmp($_REQUEST["accion"], "newcomentario") == 0) {
+        $nick = $_REQUEST["nick"];
+        $texto = $_REQUEST["texto"];
+        $idSerie = $_REQUEST["idSerie"];
+        ControladorSeries::addComentario($nick, $texto, $idSerie);
+    }
 } else {
     //Página de inicio
     ControladorSeries::mostrarSeriesAPI();
@@ -54,6 +59,8 @@ if (isset($_REQUEST["accion"])) {
     */
 
 }
+
+
 
 
 

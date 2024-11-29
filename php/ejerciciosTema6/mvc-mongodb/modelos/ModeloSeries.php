@@ -2,6 +2,9 @@
 
     namespace Pelis\modelos;
 
+    use DateTime;
+    use MongoDB\BSON\UTCDateTime;
+
     class ModeloSeries {
 
         public static function addFav($id,$name, $image) {
@@ -29,6 +32,13 @@
             $conexion = ConexionBD::conectar();
             $comentarios = $conexion->comentarios->find(['id_serie' => intval($id)]);
             return json_encode($comentarios->toArray());
+        }
+
+        public static function addComentario($nick, $texto, $idSerie) {
+            $conexion = ConexionBD::conectar();
+            $comentario = $conexion->comentarios->insertOne(['nick' => htmlspecialchars($nick),
+                'texto' => htmlspecialchars($texto),
+                'fecha' => (new DateTime())->format('Y-m-d'), 'id_serie' => intval($idSerie) ] );
         }
 
 

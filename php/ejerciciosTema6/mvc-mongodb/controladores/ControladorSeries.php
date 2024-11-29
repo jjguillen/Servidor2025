@@ -26,5 +26,9 @@
             echo ModeloSeries::getComentarios($id);
         }
 
+        public static function addComentario($nick, $texto, $idSerie) {
+            ModeloSeries::addComentario($nick, $texto, $idSerie);
+        }
+
 
     }

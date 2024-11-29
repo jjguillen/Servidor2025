@@ -17,6 +17,32 @@
     </div>
 </div>
 
+<div class="modal" id="newcomentario" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Nuevo comentario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nick" class="form-label">Nick</label>
+                    <input type="text" class="form-control" id="nick">
+                    <input type="hidden" id="idSerie">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Texto</label>
+                    <textarea class="form-control" id="texto" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="closeNW">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="nuevoComentario">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 <script>
@@ -164,21 +190,19 @@
 
             //Comentarios sacados de MongoDB
             let comentarios = await(await fetch("index.php?accion=getComentarios&id="+id)).json();
-            let textCom = "<div class='list-group mt-3'>";
+            let textCom = "<div class='list-group mt-3' id='divcomentarios'>";
             for(const comentario of comentarios) {
                 textCom += `
                 <div class='list-group-item list-group-item-action'>
                     <div class="d-flex w-100 justify-content-between mt-2">
                       <h6 class="mb-1">${comentario.nick}</h6>
-                      <small>3 days ago</small>
+                      <small>${comentario.fecha}</small>
                     </div>
                     <p class="mb-1">${comentario.texto}</p>
                 </div>
                 `;
             }
             textCom += "</div>";
-
-            console.log(textCom);
 
             let component = `<div class="row mb-2">
                 <div class="col-md-12">
@@ -193,7 +217,7 @@
                       </a>
                       <div class="mt-4">
                          <h5>Comentarios
-                             <button class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#newcom'>+</button>
+                             <button class='btn btn-info btn-sm' data-bs-toggle='modal' data-bs-target='#newcomentario'>+</button>
                          </h5>
                          ${textCom}
                       </div>
@@ -207,12 +231,52 @@
 
             document.getElementById("principal").innerHTML = component;
 
+            //Metemos al modal de añadir comentario el id de la serie a la que pertenece
+            document.getElementById("idSerie").value = id;
+
         }
 
     });
 
     document.getElementById("nuevoComentario").addEventListener("click", async function(e) {
         e.preventDefault();
+        //Leer datos y llamar a PHP al index para guardar el comentario con la fecha
+        let nick = document.getElementById('nick').value;
+        let texto = document.getElementById('texto').value;
+        let idSerie = document.getElementById('idSerie').value;
+
+        const formData = new FormData();
+        formData.append("accion", "newcomentario");
+        formData.append("nick", nick);
+        formData.append("texto", texto);
+        formData.append("idSerie", idSerie);
+
+        //const response = await fetch("index.php?accion=newcomentario");
+
+        const response = await fetch("index.php", {
+            method: "POST",
+            body: formData,
+        });
+
+        var nmodal = document.getElementById('closeNW');
+        nmodal.click();
+
+        //Repintar comentarios
+        let comentarios = await(await fetch("index.php?accion=getComentarios&id="+idSerie)).json();
+        let divComentarios = document.getElementById('divcomentarios');
+        let textCom = "";
+        for(const comentario of comentarios) {
+            textCom += `
+                <div class='list-group-item list-group-item-action'>
+                    <div class="d-flex w-100 justify-content-between mt-2">
+                      <h6 class="mb-1">${comentario.nick}</h6>
+                      <small>${comentario.fecha}</small>
+                    </div>
+                    <p class="mb-1">${comentario.texto}</p>
+                </div>
+                `;
+        }
+        divComentarios.innerHTML = textCom;
 
     });
 
@@ -220,30 +284,7 @@
 
 </script>
 
-<div class="modal" id="newcom" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Nuevo comentario</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="nick" class="form-label">Nick</label>
-                    <input type="text" class="form-control" id="nick">
-                </div>
-                <div class="mb-3">
-                    <label for="texto" class="form-label">Texto</label>
-                    <textarea class="form-control" id="texto" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="nuevoComentario">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 </body>
 </html>
